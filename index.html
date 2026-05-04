@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Education Consulting</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #3b8fd4;
+      --blue:   #64aee0;
+      --accent: #e07b4a;
+      --light:  #f0f7ff;
+      --text:   #1a4070;
+      --muted:  #6888a0;
+      --border: #cde1f2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: #fafbff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6%;
+      height: 64px;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .9rem;
+      letter-spacing: .03em;
+      transition: color .2s;
+    }
+
+    nav a:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(220,238,255,.90), rgba(235,248,255,.87)),
+        url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: var(--text);
+      text-align: center;
+      padding: 130px 6% 110px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2.2rem;
+      color: var(--muted);
+      opacity: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: .75rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .95rem;
+      letter-spacing: .03em;
+      transition: background .2s, transform .15s;
+    }
+
+    .btn:hover { background: #c4622e; transform: translateY(-1px); }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 80px 6%; }
+    section:nth-child(even) { background: var(--light); }
+
+    .section-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .5rem;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,.14);
+      aspect-ratio: 4/3;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .about-stats .stat { flex: 1; }
+
+    .stat {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .stat .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat .label {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .35rem;
+    }
+
+    /* ── SERVICES ── */
+    #services { text-align: center; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: left;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 10px 36px rgba(0,0,0,.1);
+      transform: translateY(-4px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 1.5rem 1.6rem;
+    }
+
+    .card-body h3 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: .5rem;
+      font-weight: 600;
+    }
+
+    .card-body p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── APPROACH ── */
+    .approach-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .approach-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,.12);
+      aspect-ratio: 3/4;
+    }
+
+    .approach-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 3.5rem;
+      counter-increment: step;
+    }
+
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: .1rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: .35rem;
+    }
+
+    .step p { font-size: .9rem; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      max-width: 700px;
+      margin: 2rem auto 0;
+    }
+
+    .contact-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .contact-item .ci-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    .contact-item a, .contact-item span {
+      font-size: .95rem;
+      color: var(--navy);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      padding: 2rem 6%;
+      font-size: .85rem;
+    }
+
+    footer strong { color: rgba(255,255,255,.85); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      /* nav: stack logo above links instead of hiding them */
+      nav {
+        height: auto;
+        flex-direction: column;
+        padding: .9rem 6%;
+        gap: .6rem;
+      }
+      nav ul {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* hero: trim vertical padding */
+      .hero { padding: 72px 6% 60px; }
+
+      /* sections: less vertical breathing room */
+      section { padding: 52px 6%; }
+
+      /* about: single column, photo first */
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-photo { order: -1; }
+
+      /* services: force single column on small screens */
+      .cards { grid-template-columns: 1fr; }
+
+      /* approach: single column, portrait photo becomes landscape */
+      .approach-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .approach-photo { aspect-ratio: 16/9; }
+
+      /* lead: tighten bottom margin */
+      .lead { margin-bottom: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span>Orbit</span> Education</a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Your Path to the<br><em>World's Best Universities</em></h1>
+  <p>Expert guidance for students navigating graduate admissions, overseas programs, and US–China joint degree opportunities — since 2018.</p>
+  <a class="btn" href="#contact">Get in Touch</a>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo">
+      <img
+        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80"
+        alt="Students in a university consultation session"
+        loading="lazy">
+    </div>
+    <div>
+      <p class="section-label">Who We Are</p>
+      <h2>Bridging Students and<br>Global Opportunities</h2>
+      <p>Orbit Education Consulting was founded in 2018 with a single mission: help driven students find the right academic path — whether that means a top graduate program, an immersive overseas experience, or a joint degree between leading Chinese and American universities.</p>
+      <p style="margin-top:1rem; color: var(--muted); font-size:.95rem;">Our advisors bring first-hand experience at selective institutions and a deep understanding of what admissions committees look for.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="number">2018</div>
+          <div class="label">Year Founded</div>
+        </div>
+        <div class="stat">
+          <div class="number">1000+</div>
+          <div class="label">Students Served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What We Offer</p>
+  <h2>Our Services</h2>
+  <p class="lead" style="margin: .5rem auto 2.5rem;">Comprehensive support at every stage of your academic journey.</p>
+  <div class="cards">
+
+    <div class="card">
+      <img class="card-img"
+        src="https://images.unsplash.com/photo-1627556704302-624286467c65?auto=format&fit=crop&w=700&q=80"
+        alt="Graduation ceremony"
+        loading="lazy">
+      <div class="card-body">
+        <h3>Graduate School Application</h3>
+        <p>End-to-end support for Master's and PhD applications — school selection, statement of purpose, letters of recommendation, interview preparation, and final decisions.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img class="card-img"
+        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80"
+        alt="Students in a university lecture"
+        loading="lazy">
+      <div class="card-body">
+        <h3>Summer Workshop Programs</h3>
+        <p>Curated short-term programs at top universities that build academic credentials, expand networks, and give students a meaningful taste of campus life abroad.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img class="card-img"
+        src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=700&q=80"
+        alt="International travel and study abroad"
+        loading="lazy">
+      <div class="card-body">
+        <h3>Overseas Study Programs</h3>
+        <p>Semester and year-long study abroad placements, including housing, enrollment support, visa guidance, and on-the-ground orientation for a smooth transition.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img class="card-img"
+        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80"
+        alt="International students collaborating"
+        loading="lazy">
+      <div class="card-body">
+        <h3>US–China Joint Programs</h3>
+        <p>Advisory for joint undergraduate degrees offered through partnerships between Chinese and American universities — helping students understand pathways, credits, and requirements.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="approach-inner">
+    <div>
+      <p class="section-label">How We Work</p>
+      <h2>A Personalized Process</h2>
+      <p style="color:var(--muted); margin-bottom:2rem;">We build a plan around each student's goals, background, and timeline.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Initial Consultation</h3>
+          <p>We assess your academic profile, goals, and aspirations to understand where you want to go and what it will take to get there.</p>
+        </div>
+        <div class="step">
+          <h3>Strategic Planning</h3>
+          <p>We build a tailored roadmap — target programs, timelines, test preparation, and application strategy — designed for your specific situation.</p>
+        </div>
+        <div class="step">
+          <h3>Application Support</h3>
+          <p>Hands-on guidance through every component: essays, CVs, recommendation letters, financial documents, and interview coaching.</p>
+        </div>
+        <div class="step">
+          <h3>Decision & Beyond</h3>
+          <p>We help you evaluate offers, prepare for departure, and stay connected as a resource long after you enroll.</p>
+        </div>
+      </div>
+    </div>
+    <div class="approach-photo">
+      <img
+        src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80"
+        alt="Advisor meeting with a student"
+        loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Reach Us</p>
+  <h2>Start the Conversation</h2>
+  <p class="lead" style="margin: .5rem auto 0;">Ready to explore your options? We'd love to hear from you.</p>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="ci-label">Email</div>
+      <a href="mailto:info@orbitadvisor.com">info@orbitadvisor.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Orbit Education Consulting</strong> &nbsp;·&nbsp; Founded 2018 &nbsp;·&nbsp; &copy; 2026 All rights reserved.</p>
+</footer>
+
+</body>
+</html>
