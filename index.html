@@ -49,6 +49,12 @@
 
     .logo span { color: var(--accent); }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
     nav ul {
       list-style: none;
       display: flex;
@@ -64,6 +70,45 @@
     }
 
     nav a:hover { color: #fff; }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.6);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      padding: .3rem .65rem;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      font-family: inherit;
+    }
+
+    .lang-btn.active {
+      background: rgba(255,255,255,.18);
+      color: #fff;
+    }
+
+    .lang-btn:hover:not(.active) {
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.9);
+    }
+
+    .lang-divider {
+      width: 1px;
+      height: 1.1em;
+      background: rgba(255,255,255,.3);
+    }
 
     /* ── HERO ── */
     .hero {
@@ -343,11 +388,14 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      /* nav: stack logo above links instead of hiding them */
       nav {
         height: auto;
         flex-direction: column;
         padding: .9rem 6%;
+        gap: .6rem;
+      }
+      .nav-right {
+        flex-direction: column;
         gap: .6rem;
       }
       nav ul {
@@ -357,24 +405,13 @@
         justify-content: center;
       }
 
-      /* hero: trim vertical padding */
       .hero { padding: 72px 6% 60px; }
-
-      /* sections: less vertical breathing room */
       section { padding: 52px 6%; }
-
-      /* about: single column, photo first */
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .about-photo { order: -1; }
-
-      /* services: force single column on small screens */
       .cards { grid-template-columns: 1fr; }
-
-      /* approach: single column, portrait photo becomes landscape */
       .approach-inner { grid-template-columns: 1fr; gap: 2rem; }
       .approach-photo { aspect-ratio: 16/9; }
-
-      /* lead: tighten bottom margin */
       .lead { margin-bottom: 1.5rem; }
     }
   </style>
@@ -384,19 +421,26 @@
 <!-- NAV -->
 <nav>
   <a class="logo" href="#"><span>Orbit</span> Education</a>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#approach">Approach</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#about" data-i18n="nav-about">About</a></li>
+      <li><a href="#services" data-i18n="nav-services">Services</a></li>
+      <li><a href="#approach" data-i18n="nav-approach">Approach</a></li>
+      <li><a href="#contact" data-i18n="nav-contact">Contact</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <div class="lang-divider"></div>
+      <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Your Path to the<br><em>World's Best Universities</em></h1>
-  <p>Expert guidance for students navigating graduate admissions, overseas programs, and US–China joint degree opportunities — since 2018.</p>
-  <a class="btn" href="#contact">Get in Touch</a>
+  <h1 data-i18n="hero-h1">Your Path to the<br><em>World's Best Universities</em></h1>
+  <p data-i18n="hero-p">Expert guidance for students navigating graduate admissions, overseas programs, and US–China joint degree opportunities — since 2018.</p>
+  <a class="btn" href="#contact" data-i18n="hero-btn">Get in Touch</a>
 </section>
 
 <!-- ABOUT -->
@@ -409,18 +453,18 @@
         loading="lazy">
     </div>
     <div>
-      <p class="section-label">Who We Are</p>
-      <h2>Bridging Students and<br>Global Opportunities</h2>
-      <p>Orbit Education Consulting was founded in 2018 with a single mission: help driven students find the right academic path — whether that means a top graduate program, an immersive overseas experience, or a joint degree between leading Chinese and American universities.</p>
-      <p style="margin-top:1rem; color: var(--muted); font-size:.95rem;">Our advisors bring first-hand experience at selective institutions and a deep understanding of what admissions committees look for.</p>
+      <p class="section-label" data-i18n="about-label">Who We Are</p>
+      <h2 data-i18n="about-h2">Bridging Students and<br>Global Opportunities</h2>
+      <p data-i18n="about-p1">Orbit Education Consulting was founded in 2018 with a single mission: help driven students find the right academic path — whether that means a top graduate program, an immersive overseas experience, or a joint degree between leading Chinese and American universities.</p>
+      <p style="margin-top:1rem; color: var(--muted); font-size:.95rem;" data-i18n="about-p2">Our advisors bring first-hand experience at selective institutions and a deep understanding of what admissions committees look for.</p>
       <div class="about-stats">
         <div class="stat">
           <div class="number">2018</div>
-          <div class="label">Year Founded</div>
+          <div class="label" data-i18n="stat-founded-label">Year Founded</div>
         </div>
         <div class="stat">
           <div class="number">1000+</div>
-          <div class="label">Students Served</div>
+          <div class="label" data-i18n="stat-served-label">Students Served</div>
         </div>
       </div>
     </div>
@@ -429,9 +473,9 @@
 
 <!-- SERVICES -->
 <section id="services">
-  <p class="section-label">What We Offer</p>
-  <h2>Our Services</h2>
-  <p class="lead" style="margin: .5rem auto 2.5rem;">Comprehensive support at every stage of your academic journey.</p>
+  <p class="section-label" data-i18n="services-label">What We Offer</p>
+  <h2 data-i18n="services-h2">Our Services</h2>
+  <p class="lead" style="margin: .5rem auto 2.5rem;" data-i18n="services-lead">Comprehensive support at every stage of your academic journey.</p>
   <div class="cards">
 
     <div class="card">
@@ -440,8 +484,8 @@
         alt="Graduation ceremony"
         loading="lazy">
       <div class="card-body">
-        <h3>Graduate School Application</h3>
-        <p>End-to-end support for Master's and PhD applications — school selection, statement of purpose, letters of recommendation, interview preparation, and final decisions.</p>
+        <h3 data-i18n="card1-h3">Graduate School Application</h3>
+        <p data-i18n="card1-p">End-to-end support for Master's and PhD applications — school selection, statement of purpose, letters of recommendation, interview preparation, and final decisions.</p>
       </div>
     </div>
 
@@ -451,8 +495,8 @@
         alt="Students in a university lecture"
         loading="lazy">
       <div class="card-body">
-        <h3>Summer Workshop Programs</h3>
-        <p>Curated short-term programs at top universities that build academic credentials, expand networks, and give students a meaningful taste of campus life abroad.</p>
+        <h3 data-i18n="card2-h3">Summer Workshop Programs</h3>
+        <p data-i18n="card2-p">Curated short-term programs at top universities that build academic credentials, expand networks, and give students a meaningful taste of campus life abroad.</p>
       </div>
     </div>
 
@@ -462,8 +506,8 @@
         alt="International travel and study abroad"
         loading="lazy">
       <div class="card-body">
-        <h3>Overseas Study Programs</h3>
-        <p>Semester and year-long study abroad placements, including housing, enrollment support, visa guidance, and on-the-ground orientation for a smooth transition.</p>
+        <h3 data-i18n="card3-h3">Overseas Study Programs</h3>
+        <p data-i18n="card3-p">Semester and year-long study abroad placements, including housing, enrollment support, visa guidance, and on-the-ground orientation for a smooth transition.</p>
       </div>
     </div>
 
@@ -473,8 +517,8 @@
         alt="International students collaborating"
         loading="lazy">
       <div class="card-body">
-        <h3>US–China Joint Programs</h3>
-        <p>Advisory for joint undergraduate degrees offered through partnerships between Chinese and American universities — helping students understand pathways, credits, and requirements.</p>
+        <h3 data-i18n="card4-h3">US–China Joint Programs</h3>
+        <p data-i18n="card4-p">Advisory for joint undergraduate degrees offered through partnerships between Chinese and American universities — helping students understand pathways, credits, and requirements.</p>
       </div>
     </div>
 
@@ -485,25 +529,25 @@
 <section id="approach">
   <div class="approach-inner">
     <div>
-      <p class="section-label">How We Work</p>
-      <h2>A Personalized Process</h2>
-      <p style="color:var(--muted); margin-bottom:2rem;">We build a plan around each student's goals, background, and timeline.</p>
+      <p class="section-label" data-i18n="approach-label">How We Work</p>
+      <h2 data-i18n="approach-h2">A Personalized Process</h2>
+      <p style="color:var(--muted); margin-bottom:2rem;" data-i18n="approach-sub">We build a plan around each student's goals, background, and timeline.</p>
       <div class="steps">
         <div class="step">
-          <h3>Initial Consultation</h3>
-          <p>We assess your academic profile, goals, and aspirations to understand where you want to go and what it will take to get there.</p>
+          <h3 data-i18n="step1-h3">Initial Consultation</h3>
+          <p data-i18n="step1-p">We assess your academic profile, goals, and aspirations to understand where you want to go and what it will take to get there.</p>
         </div>
         <div class="step">
-          <h3>Strategic Planning</h3>
-          <p>We build a tailored roadmap — target programs, timelines, test preparation, and application strategy — designed for your specific situation.</p>
+          <h3 data-i18n="step2-h3">Strategic Planning</h3>
+          <p data-i18n="step2-p">We build a tailored roadmap — target programs, timelines, test preparation, and application strategy — designed for your specific situation.</p>
         </div>
         <div class="step">
-          <h3>Application Support</h3>
-          <p>Hands-on guidance through every component: essays, CVs, recommendation letters, financial documents, and interview coaching.</p>
+          <h3 data-i18n="step3-h3">Application Support</h3>
+          <p data-i18n="step3-p">Hands-on guidance through every component: essays, CVs, recommendation letters, financial documents, and interview coaching.</p>
         </div>
         <div class="step">
-          <h3>Decision & Beyond</h3>
-          <p>We help you evaluate offers, prepare for departure, and stay connected as a resource long after you enroll.</p>
+          <h3 data-i18n="step4-h3">Decision & Beyond</h3>
+          <p data-i18n="step4-p">We help you evaluate offers, prepare for departure, and stay connected as a resource long after you enroll.</p>
         </div>
       </div>
     </div>
@@ -518,12 +562,12 @@
 
 <!-- CONTACT -->
 <section id="contact">
-  <p class="section-label">Reach Us</p>
-  <h2>Start the Conversation</h2>
-  <p class="lead" style="margin: .5rem auto 0;">Ready to explore your options? We'd love to hear from you.</p>
+  <p class="section-label" data-i18n="contact-label">Reach Us</p>
+  <h2 data-i18n="contact-h2">Start the Conversation</h2>
+  <p class="lead" style="margin: .5rem auto 0;" data-i18n="contact-lead">Ready to explore your options? We'd love to hear from you.</p>
   <div class="contact-grid">
     <div class="contact-item">
-      <div class="ci-label">Email</div>
+      <div class="ci-label" data-i18n="contact-email-label">Email</div>
       <a href="mailto:info@orbitadvisor.com">info@orbitadvisor.com</a>
     </div>
   </div>
@@ -531,8 +575,115 @@
 
 <!-- FOOTER -->
 <footer>
-  <p><strong>Orbit Education Consulting</strong> &nbsp;·&nbsp; Founded 2018 &nbsp;·&nbsp; &copy; 2026 All rights reserved.</p>
+  <p data-i18n="footer-text"><strong>Orbit Education Consulting</strong> &nbsp;·&nbsp; Founded 2018 &nbsp;·&nbsp; &copy; 2026 All rights reserved.</p>
 </footer>
+
+<script>
+  const translations = {
+    en: {
+      'nav-about':          'About',
+      'nav-services':       'Services',
+      'nav-approach':       'Approach',
+      'nav-contact':        'Contact',
+      'hero-h1':            'Your Path to the<br><em>World\'s Best Universities</em>',
+      'hero-p':             'Expert guidance for students navigating graduate admissions, overseas programs, and US–China joint degree opportunities — since 2018.',
+      'hero-btn':           'Get in Touch',
+      'about-label':        'Who We Are',
+      'about-h2':           'Bridging Students and<br>Global Opportunities',
+      'about-p1':           'Orbit Education Consulting was founded in 2018 with a single mission: help driven students find the right academic path — whether that means a top graduate program, an immersive overseas experience, or a joint degree between leading Chinese and American universities.',
+      'about-p2':           'Our advisors bring first-hand experience at selective institutions and a deep understanding of what admissions committees look for.',
+      'stat-founded-label': 'Year Founded',
+      'stat-served-label':  'Students Served',
+      'services-label':     'What We Offer',
+      'services-h2':        'Our Services',
+      'services-lead':      'Comprehensive support at every stage of your academic journey.',
+      'card1-h3':           'Graduate School Application',
+      'card1-p':            'End-to-end support for Master’s and PhD applications — school selection, statement of purpose, letters of recommendation, interview preparation, and final decisions.',
+      'card2-h3':           'Summer Workshop Programs',
+      'card2-p':            'Curated short-term programs at top universities that build academic credentials, expand networks, and give students a meaningful taste of campus life abroad.',
+      'card3-h3':           'Overseas Study Programs',
+      'card3-p':            'Semester and year-long study abroad placements, including housing, enrollment support, visa guidance, and on-the-ground orientation for a smooth transition.',
+      'card4-h3':           'US–China Joint Programs',
+      'card4-p':            'Advisory for joint undergraduate degrees offered through partnerships between Chinese and American universities — helping students understand pathways, credits, and requirements.',
+      'approach-label':     'How We Work',
+      'approach-h2':        'A Personalized Process',
+      'approach-sub':       'We build a plan around each student’s goals, background, and timeline.',
+      'step1-h3':           'Initial Consultation',
+      'step1-p':            'We assess your academic profile, goals, and aspirations to understand where you want to go and what it will take to get there.',
+      'step2-h3':           'Strategic Planning',
+      'step2-p':            'We build a tailored roadmap — target programs, timelines, test preparation, and application strategy — designed for your specific situation.',
+      'step3-h3':           'Application Support',
+      'step3-p':            'Hands-on guidance through every component: essays, CVs, recommendation letters, financial documents, and interview coaching.',
+      'step4-h3':           'Decision & Beyond',
+      'step4-p':            'We help you evaluate offers, prepare for departure, and stay connected as a resource long after you enroll.',
+      'contact-label':      'Reach Us',
+      'contact-h2':         'Start the Conversation',
+      'contact-lead':       'Ready to explore your options? We’d love to hear from you.',
+      'contact-email-label':'Email',
+      'footer-text':        '<strong>Orbit Education Consulting</strong>  ·  Founded 2018  ·  © 2026 All rights reserved.',
+    },
+    zh: {
+      'nav-about':          '关于我们',
+      'nav-services':       '服务项目',
+      'nav-approach':       '服务流程',
+      'nav-contact':        '联系我们',
+      'hero-h1':            '通往顶尖大学<br><em>的专业申请之路</em>',
+      'hero-p':             '自2018年起，为有志于研究生申请、海外访学及中美联合学位项目的学生提供专业全程指导。',
+      'hero-btn':           '立即咨询',
+      'about-label':        '关于我们',
+      'about-h2':           '连接学生与<br>全球教育机遇',
+      'about-p1':           'Orbit留学咨询成立于2018年，致力于帮助每一位有梦想的学生找到最适合自己的学术道路——无论是顶尖研究生项目、沉浸式海外访学，还是中美高校联合学位项目。',
+      'about-p2':           '我们的顾问团队均有名校求学经历，深入了解招生委员会的评审标准与期望。',
+      'stat-founded-label': '创立年份',
+      'stat-served-label':  '服务学生',
+      'services-label':     '服务内容',
+      'services-h2':        '我们的服务',
+      'services-lead':      '全程陪伴，覆盖您学术之路每一个重要阶段。',
+      'card1-h3':           '研究生申请',
+      'card1-p':            '提供硕士及博士申请全流程支持，包括选校、文书撰写、推荐信规划、面试辅导及最终录取决策。',
+      'card2-h3':           '暑期访学项目',
+      'card2-p':            '精心甄选顶尖大学短期项目，帮助学生积累学术背景、拓展国际人脉，亲身体验海外校园生活。',
+      'card3-h3':           '海外留学项目',
+      'card3-p':            '提供学期制及年度留学安置服务，涵盖住宿安排、课程注册、签证指导及落地适应全程支持。',
+      'card4-h3':           '中美联合培养项目',
+      'card4-p':            '专注中美高校联合本科学位项目咨询，帮助学生全面了解申请路径、学分互认及就读要求。',
+      'approach-label':     '服务流程',
+      'approach-h2':        '个性化服务方案',
+      'approach-sub':       '我们围绕每位学生的目标、背景与时间线，量身定制专属规划。',
+      'step1-h3':           '初步咨询',
+      'step1-p':            '全面评估您的学术背景、目标与志向，明确努力方向，制定切实可行的申请策略。',
+      'step2-h3':           '战略规划',
+      'step2-p':            '根据您的具体情况，制定个性化路线图，包括目标院校、备考时间线及整体申请策略。',
+      'step3-h3':           '申请辅导',
+      'step3-p':            '提供文书、简历、推荐信、财务证明及面试培训等各环节的专业指导与深度辅导。',
+      'step4-h3':           '录取决策与后续支持',
+      'step4-p':            '协助您综合评估录取方案、做好出行准备，并在入学后持续提供长期支持与资源。',
+      'contact-label':      '联系我们',
+      'contact-h2':         '开启您的留学之旅',
+      'contact-lead':       '准备好探索您的未来了吗？欢迎随时与我们联系。',
+      'contact-email-label':'邮箱',
+      'footer-text':        '<strong>Orbit留学咨询</strong>  ·  创立于2018年  ·  © 2026 版权所有',
+    }
+  };
+
+  function setLang(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    try { localStorage.setItem('lang', lang); } catch(e) {}
+  }
+
+  (function init() {
+    let saved = 'en';
+    try { saved = localStorage.getItem('lang') || 'en'; } catch(e) {}
+    if (saved === 'zh') setLang('zh');
+  })();
+</script>
 
 </body>
 </html>
